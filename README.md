@@ -1,18 +1,19 @@
 Prerequisites
 =============
 
-Custom version of NS-3 and specified version of ndnSIM needs to be installed.
+Custom version of NS-3 (https://github.com/named-data-ndnSIM/ns-3-dev/tree/2c66f4c02008805eaa7f2a21b88162b4f46e5ec2)
+and ndnSIM 2.1 needs to be installed.
 
 The code should also work with the latest version of ndnSIM, but it is not guaranteed.
 
     mkdir ns-dev
     cd ns-dev
 
-    git clone git://github.com/cawka/ns-3-dev-ndnSIM.git ns-3
-    git clone git://github.com/cawka/pybindgen.git pybindgen
-    git clone git://github.com/NDN-Routing/ndnSIM.git ns-3/src/ndnSIM
+    git clone https://github.com/named-data-ndnSIM/ns-3-dev ns-3
+    git checkout 2c66f4c02008805eaa7f2a21b88162b4f46e5ec2
+    git clone https://github.com/named-data-ndnSIM/ndnSIM ns-3/src/ndnSIM
 
-    git clone git://github.com/cawka/ndnSIM-scenario-template.git my-simulations
+    git clone https://github.com/named-data-ndnSIM/ndn-ping-scenario my-simulations
 
     cd ns-3
     ./waf configure -d optimized
@@ -32,8 +33,8 @@ To configure in optimized mode without logging **(default)**:
 
     ./waf configure
 
-To configure in optimized mode with scenario logging enabled (logging in NS-3 and ndnSIM modules will still be disabled,
-but you can see output from NS_LOG* calls from your scenarios and extensions):
+To configure in optimized mode with scenario logging enabled (logging in NS-3 and ndnSIM modules will
+still be disabled, but you can see output from NS_LOG* calls from your scenarios and extensions):
 
     ./waf configure --logging
 
@@ -41,57 +42,38 @@ To configure in debug mode with all logging enabled
 
     ./waf configure --debug
 
-If you have installed NS-3 in a non-standard location, you may need to set up ``PKG_CONFIG_PATH`` variable.
+If you have installed NS-3 in a non-standard location, you may need to set up ``PKG_CONFIG_PATH``
+variable.
 
 Running
 =======
 
-Normally, you can run scenarios either directly
+You can run the ping scenario by typing
 
-    ./build/<scenario_name>
+    ./build/ndn-cxx-simple-ping
 
 or using waf
 
-    ./waf --run <scenario_name>
+    ./waf --run ndn-cxx-simple-ping
 
 If NS-3 is installed in a non-standard location, on some platforms (e.g., Linux) you need to specify ``LD_LIBRARY_PATH`` variable:
 
-    LD_LIBRARY_PATH=/usr/local/lib ./build/<scenario_name>
+    LD_LIBRARY_PATH=/usr/local/lib ./build/ndn-cxx-simple-ping
 
 or
 
-    LD_LIBRARY_PATH=/usr/local/lib ./waf --run <scenario_name>
+    LD_LIBRARY_PATH=/usr/local/lib ./waf --run ndn-cxx-simple-ping
 
 To run scenario using debugger, use the following command:
 
-    gdb --args ./build/<scenario_name>
+    gdb --args ./build/ndn-cxx-simple-ping
 
 
 Running with visualizer
 -----------------------
 
-There are several tricks to run scenarios in visualizer.  Before you can do it, you need to set up environment variables for python to find visualizer module.  The easiest way to do it using the following commands:
-
-    cd ns-dev/ns-3
-    ./waf shell
-
-After these command, you will have complete environment to run the vizualizer.
-
-The following will run scenario with visualizer:
-
-    ./waf --run <scenario_name> --vis
-
-or
-
-    PKG_LIBRARY_PATH=/usr/local/lib ./waf --run <scenario_name> --vis
-
-If you want to request automatic node placement, set up additional environment variable:
-
-    NS_VIS_ASSIGN=1 ./waf --run <scenario_name> --vis
-
-or
-
-    PKG_LIBRARY_PATH=/usr/local/lib NS_VIS_ASSIGN=1 ./waf --run <scenario_name> --vis
+The visualizer is not available, since the scenarios simulating a real application cannot use any
+GUI operations.
 
 Available simulations
 =====================
@@ -99,5 +81,5 @@ Available simulations
 <Scenario Name>
 ---------------
 
-Description
-
+ndn-cxx-simple-ping: Simulation scenario of the ping application included in the
+NDN Essential Tools (http://github.com/named-data/ndn-tools) repository.
